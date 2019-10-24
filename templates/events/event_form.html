@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<b>Logged in as: </b><i>{{request.user.username}} ({{request.user.email}})</i><a href="{% url 'meetup_auth:logout'%}"><u><b>Logout</b></u></a><br>
+
+	<b>CREATE EVENT</b>
+	<b>{{form.errors}}</b>
+	<form method="post">{% csrf_token %}
+		{{form.as_p}}
+	    <input type="submit" value="Save">
+	</form>
+
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{maps_api_key}}&libraries=places"></script>
+	<script type="text/javascript">
+      var input = document.getElementById('id_address');
+      var autocomplete = new google.maps.places.Autocomplete(input);
+      google.maps.event.addListener(autocomplete, 'place_changed', function(){
+        var place = autocomplete.getPlace();
+        document.getElementById('id_latitude').value = place.geometry.location.lat().toFixed(6);
+        document.getElementById('id_longitude').value = place.geometry.location.lng().toFixed(6);
+      })
+	</script>
+{% endblock %}

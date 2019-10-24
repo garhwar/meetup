@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Signup</title>
+</head>
+<body>
+	{% if registered %}
+		You are now registered! <a href="{% url 'meetup_auth:login' %}">Login</a>
+	{% else %}
+		<form enctype="multipart/form-data" method="POST">
+	      {% csrf_token %}
+	      {{ form.as_p }}
+	      <input type="submit" name="" value="Signup">
+	    </form>
+	{% endif %}
+</body>
+</html>

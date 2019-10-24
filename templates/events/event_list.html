@@ -1,0 +1,10 @@
+{% if request.user.username %}
+<b>Logged in as: </b><i>{{request.user.username}} ({{request.user.email}})</i><a href="{% url 'meetup_auth:logout'%}"><u><b>Logout</b></u></a><br>
+{% endif %}
+<b>LIST OF EVENTS: </b>{% if request.user.username %}<a href="{% url 'events:event-create' %}">[<u>Create an event</u>]</a>{% else %}<a href="{% url 'meetup_auth:login'%}"><u><b>[<u>Login to create an event</u>]</b></u></a>{% endif %}<br>
+
+{% for event in event_list %}
+	<a href="{% url 'events:event-detail' pk=event.id %}">"{{event.name}}" starting at {{event.start_time}}</a><br>
+	{{event.description}}
+	<hr>
+{% endfor %}

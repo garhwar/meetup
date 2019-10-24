@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Meetup</title>
+</head>
+<body>
+	<b>Welcome to Meetup! Registered members can create events and join public events. If a member joins an event, that event gets added to his google calendar.</b><br><br>
+	<b>{{error}}</b>
+	<form method="post" action="{% url 'meetup_auth:login' %}">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" name="username" placeholder="Username">
+		<label for="password">Password:</label>
+		<input type="password" name="password" placeholder="Password">
+		<input type="submit" name="" value="Login">
+	</form>
+	or register if you do not have an account: <a href="{% url 'meetup_auth:signup' %}">Signup</a>
+</body>
+</html>

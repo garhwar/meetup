@@ -1,0 +1,20 @@
+<b>Logged in as: </b><i>{{request.user.username}} ({{request.user.email}})</i><a href="{% url 'meetup_auth:logout'%}"><u><b>Logout</b></u></a><br>
+
+
+<b>EVENT DETAILS</b><br>
+<u>Name</u>: {{event.name}}<br>
+<u>Organized By</u>: {{event.organizer.username}}<br>
+<u>Description</u>: {{event.description}}<br>
+<u>Starting at</u>: {{event.start_time}}<br>
+<u>Venue</u>: {{event.address}}<br>
+<u>Who all are going?</u>:<br>
+{% for member in event.members.all %}
+	{{member.username}} {% if member == request.user %}<b>(You are going. Event has been added to your calendar.)</b>{% endif %}<br> 
+{% endfor %}
+
+{% if request.user not in event.members.all %}
+	<form method="POST" action="{% url 'events:event-join' event.id %}">
+		{% csrf_token %}
+		<input type="submit" name="join" value="JOIN">
+	</form>
+{% endif %}
